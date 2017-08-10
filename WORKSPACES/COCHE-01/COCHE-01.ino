@@ -41,8 +41,8 @@ unsigned char SM;                   //state of middle sensor of line tracking mo
 unsigned char SR;                   //state of right sensor of line tracking module
 
 //ULTRASONIDOS
-int inputPin=A0;                    // ultrasonic module   ECHO to A0
-int outputPin=A1;                   // ultrasonic module  TRIG to A1
+int inputPin=A1;                    // ultrasonic module  ECHO to A1
+int outputPin=A0;                   // ultrasonic module  TRIG to A0
 
 
 unsigned char Bluetooth_val;                // ultrasonic module  TRIG to A1
@@ -111,19 +111,30 @@ void M_Control_IO_config(void)
 //function of setting speed
 void Set_Speed(unsigned char Left,unsigned char Right) 
 {
+  // ajuste para prevenir el zumbido de motores a muy baja velocidad
+  if (Left <= 8) 
+  {
+    Left = 0;
+  }
+  
+  if (Right <= 8) 
+  {
+    Right = 0;
+  }
+  
   analogWrite(Lpwm_pin,Left);
   analogWrite(Rpwm_pin,Right);
 }
 
 
 
-//Acelerar
+//Acelerar  No se está usando esta funcion por ahora
 void Acelerate() 
 {
 
 // ajuste para prevenir el zumbido de motores a muy baja velocidad
-//if motorSpeed1 < 8) motorSpeed1 = 0;
-//if motorSpeed2 < 8) motorSpeed2 = 0;
+//if (motorSpeed1 < 8) motorSpeed1 = 0;
+//if (motorSpeed2 < 8) motorSpeed2 = 0;
   
   for (int i = 0; i < 256; i++)
   {
